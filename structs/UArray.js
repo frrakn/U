@@ -18,14 +18,49 @@ class UArray extends Array{
 		}
 		return sorted;
 	};
+	static shuffle(uarr){
+		for(let i = 0; i < uarr.length; i++){
+			let x = Math.floor(Math.random() * (uarr.length - i));
+			UArray.swap(arr, i, i + x);
+		}
+	};
+	static selectionSort(uarr, comparator){
+		comparator = comparator || DEFAULT.COMPARATOR;
+		for(let i = 0; i < uarr.length; i++){
+			var min = i;
+			for(let j = i + 1; j < uarr.length; j++){
+				if(comparator(uarr[j], uarr[min]) === -1){
+					min = j;
+				}
+			}
+			if(min !== i){
+				UArray.swap(uarr, i, min);
+			}
+		}
+	};
+	static insertionSort(uarr, comparator){
+		comparator = comparator || DEFAULT.COMPARATOR;
+		if(uarr.length > 2){
+			for(let i = 1; i < uarr.length; i++){
+				let temp = i;
+				while(comparator(uarr[temp], uarr[temp - 1]) === -1){
+					UArray.swap(uarr, temp - 1, temp);
+					temp --;
+				}
+			}
+		}
+	};
 };
 
 var arr = new UArray(10);
 for(let i = 0; i < arr.length; i++){
 	arr[i] = i;
 }
-
-console.log(UArray.isSorted(arr));
-UArray.swap(arr, 5, 6);
+UArray.shuffle(arr);
 console.log(arr);
-console.log(UArray.isSorted(arr));
+UArray.selectionSort(arr);
+console.log(arr);
+UArray.shuffle(arr);
+console.log(arr);
+UArray.insertionSort(arr);
+console.log(arr);
