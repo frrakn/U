@@ -38,7 +38,8 @@ class UArray extends Array{
 			}
 		}
 	};
-	static insertionSort(uarr, comparator){
+	static insertionSort(uarr, comparator, interval){
+		interval = interval || 1;
 		comparator = comparator || DEFAULT.COMPARATOR;
 		if(uarr.length > 2){
 			for(let i = 1; i < uarr.length; i++){
@@ -46,6 +47,21 @@ class UArray extends Array{
 				while(comparator(uarr[temp], uarr[temp - 1]) === -1){
 					UArray.swap(uarr, temp - 1, temp);
 					temp --;
+				}
+			}
+		}
+	};
+	static bubbleSort(uarr, comparator){
+		comparator = comparator || DEFAULT.COMPARATOR;
+		if(uarr.length > 2){
+			let exch = true;
+			for(let i = 0; i < uarr.length - 1 && exch; i++){
+				exch = false;
+				for(let j = 0; j < uarr.length - i - 1; j++){
+					if(comparator(uarr[j + 1], uarr[j]) === -1){
+						UArray.swap(uarr, j, j + 1);
+						exch = true;
+					}
 				}
 			}
 		}
@@ -63,4 +79,8 @@ console.log(arr);
 UArray.shuffle(arr);
 console.log(arr);
 UArray.insertionSort(arr);
+console.log(arr);
+UArray.shuffle(arr);
+console.log(arr);
+UArray.bubbleSort(arr);
 console.log(arr);
